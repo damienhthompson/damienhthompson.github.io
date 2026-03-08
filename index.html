@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>damienhthompson — things I've built</title>
+<title>damienhthompson — technology experiments</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
@@ -18,6 +18,7 @@
     --accent1: #ff6b6b;
     --accent2: #ffd93d;
     --accent3: #6bcbff;
+    --accent4: #7effa0;
   }
 
   html { scroll-behavior: smooth; }
@@ -31,7 +32,6 @@
     overflow-x: hidden;
   }
 
-  /* Grain overlay */
   body::before {
     content: '';
     position: fixed;
@@ -42,12 +42,18 @@
     opacity: 0.4;
   }
 
-  /* Header */
-  header {
-    padding: 72px 48px 0;
+  /* ── Layout ─────────────────────────────────────────── */
+  .wrap {
     max-width: 1100px;
     margin: 0 auto;
-    position: relative;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  /* ── Header ─────────────────────────────────────────── */
+  header {
+    padding-top: 72px;
+    padding-bottom: 0;
   }
 
   .eyebrow {
@@ -66,7 +72,7 @@
     font-weight: 800;
     line-height: 0.95;
     letter-spacing: -0.03em;
-    animation: fadeUp 0.6s 0.1s ease both;
+    animation: fadeUp 0.6s 0.08s ease both;
   }
 
   h1 .name {
@@ -77,52 +83,106 @@
     background-clip: text;
   }
 
-  h1 .sub {
-    display: block;
-    color: var(--muted);
-    font-size: 0.42em;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    margin-top: 12px;
-  }
-
-  .header-line {
+  .header-rule {
     width: 100%;
     height: 1px;
     background: var(--border);
     margin-top: 48px;
-    animation: expandWidth 0.8s 0.3s ease both;
+    animation: expandWidth 0.8s 0.25s ease both;
     transform-origin: left;
   }
 
-  /* Grid */
-  main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 64px 48px 120px;
+  /* ── Positioning statement ──────────────────────────── */
+  .positioning {
+    padding-top: 52px;
+    padding-bottom: 0;
+    animation: fadeUp 0.6s 0.18s ease both;
+  }
+
+  .positioning-kicker {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 18px;
+    opacity: 0.75;
+  }
+
+  .positioning-headline {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1rem, 2.2vw, 1.35rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--text);
+    max-width: 780px;
+    margin-bottom: 18px;
+  }
+
+  .positioning-body {
+    font-size: 0.9rem;
+    color: #88889a;
+    line-height: 1.8;
+    max-width: 660px;
+  }
+
+  .positioning-rule {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-top: 52px;
+  }
+
+  /* ── Section label ──────────────────────────────────── */
+  .section-label-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-top: 52px;
+    animation: fadeUp 0.5s 0.28s ease both;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Cards ──────────────────────────────────────────── */
+  .cards {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 2px;
+    margin-top: 24px;
   }
 
-  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
-    padding: 44px 40px 40px;
+    padding: 36px 32px 32px;
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
     position: relative;
     overflow: hidden;
     transition: border-color 0.25s, transform 0.25s;
     animation: fadeUp 0.5s ease both;
   }
 
-  .card:nth-child(1) { animation-delay: 0.2s; }
-  .card:nth-child(2) { animation-delay: 0.35s; }
+  .card:nth-child(1) { animation-delay: 0.3s; }
+  .card:nth-child(2) { animation-delay: 0.42s; }
 
   .card::before {
     content: '';
@@ -130,75 +190,144 @@
     inset: 0;
     opacity: 0;
     transition: opacity 0.3s;
+    pointer-events: none;
   }
 
-  .card-radar::before { background: radial-gradient(ellipse at 0% 0%, rgba(107,203,255,0.08) 0%, transparent 65%); }
+  .card-radar::before   { background: radial-gradient(ellipse at 0% 0%, rgba(107,203,255,0.08) 0%, transparent 65%); }
   .card-mallows::before { background: radial-gradient(ellipse at 100% 0%, rgba(255,107,107,0.08) 0%, transparent 65%); }
 
   .card:hover { border-color: #333340; transform: translateY(-3px); }
   .card:hover::before { opacity: 1; }
 
+  /* card top row */
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
   .card-tag {
     font-family: 'Syne', sans-serif;
-    font-size: 0.65rem;
+    font-size: 0.62rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: 5px 10px;
+    padding: 4px 9px;
     border-radius: 4px;
-    width: fit-content;
     font-weight: 700;
   }
 
-  .card-radar .card-tag { background: rgba(107,203,255,0.12); color: var(--accent3); }
-  .card-mallows .card-tag { background: rgba(255,107,107,0.12); color: var(--accent1); }
+  .card-radar   .card-tag { background: rgba(107,203,255,0.1); color: var(--accent3); }
+  .card-mallows .card-tag { background: rgba(255,107,107,0.1); color: var(--accent1); }
 
   .card-icon {
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1;
-    filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
     transition: transform 0.3s;
   }
 
-  .card:hover .card-icon { transform: scale(1.1) rotate(-4deg); }
+  .card:hover .card-icon { transform: scale(1.12) rotate(-5deg); }
 
+  /* card title */
   .card-title {
     font-family: 'Syne', sans-serif;
-    font-size: 1.9rem;
+    font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    line-height: 1;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 12px;
   }
 
-  .card-desc {
-    font-size: 0.92rem;
-    color: #aaaabc;
+  /* one-line summary */
+  .card-summary {
+    font-size: 0.88rem;
+    color: #9999ab;
     line-height: 1.65;
-    flex: 1;
+    margin-bottom: 18px;
   }
 
+  /* explores block */
+  .card-explores {
+    margin-bottom: 20px;
+  }
+
+  .explores-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .explores-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .explores-list li {
+    font-size: 0.8rem;
+    color: #77778a;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .explores-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--border);
+    font-size: 0.72rem;
+    top: 1px;
+  }
+
+  /* card footer */
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 20px;
+    padding-top: 18px;
     border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .pills {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-size: 0.63rem;
+    padding: 3px 8px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
   }
 
   .card-cta {
     font-family: 'Syne', sans-serif;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 700;
     color: var(--muted);
     transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .card:hover .card-cta { color: var(--text); }
 
   .card-arrow {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border: 1px solid var(--border);
     border-radius: 50%;
     display: flex;
@@ -206,7 +335,8 @@
     justify-content: center;
     transition: all 0.25s;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    flex-shrink: 0;
   }
 
   .card:hover .card-arrow {
@@ -215,28 +345,80 @@
     transform: translate(2px, -2px);
   }
 
-  /* Pill tags */
-  .pills {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+  /* ── Exploring section ──────────────────────────────── */
+  .exploring {
+    margin-top: 24px;
+    animation: fadeUp 0.5s 0.38s ease both;
   }
 
-  .pill {
-    font-size: 0.68rem;
-    padding: 3px 9px;
+  .exploring-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 2px;
+  }
+
+  .exploring-item {
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 100px;
-    color: var(--muted);
-    letter-spacing: 0.04em;
+    padding: 26px 24px 22px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
   }
 
-  /* Footer */
+  .exploring-item:hover { border-color: #2e2e38; }
+
+  .exploring-item::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(107,203,255,0.25), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .exploring-item:hover::after { opacity: 1; }
+
+  .exploring-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    color: var(--border);
+    margin-bottom: 10px;
+  }
+
+  .exploring-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    margin-bottom: 7px;
+    line-height: 1.3;
+  }
+
+  .exploring-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── Footer ─────────────────────────────────────────── */
   footer {
+    margin-top: 72px;
     border-top: 1px solid var(--border);
-    padding: 28px 48px;
-    max-width: 1100px;
-    margin: 0 auto;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    animation: fadeUp 0.5s 0.45s ease both;
+  }
+
+  .footer-links {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -256,7 +438,13 @@
 
   .footer-dot { color: var(--border); }
 
-  /* Animations */
+  .footer-note {
+    font-size: 0.76rem;
+    color: #3e3e4a;
+    font-style: italic;
+  }
+
+  /* ── Animations ─────────────────────────────────────── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(18px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -267,70 +455,142 @@
     to   { transform: scaleX(1); }
   }
 
-  @media (max-width: 600px) {
-    header { padding: 48px 24px 0; }
-    main { padding: 40px 24px 80px; grid-template-columns: 1fr; }
-    footer { padding: 24px; }
+  @media (max-width: 640px) {
+    .wrap { padding-left: 24px; padding-right: 24px; }
+    .cards { grid-template-columns: 1fr; }
+    .exploring-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <p class="eyebrow">damienhthompson &nbsp;/&nbsp; github.io</p>
-  <h1>
-    <span class="name">Things I've built.</span>
-    <span class="sub">A collection of projects, tools & experiments I occasionally build to explore emerging technologies such as AI workflows, automation and decision engines. </span>
-    <span class="sub">These projects help me stay close to how modern technology actually behaves in practice.</span>
+<div class="wrap">
 
-  </h1>
-  <div class="header-line"></div>
-</header>
+  <!-- Header -->
+  <header>
+    <p class="eyebrow">damienhthompson &nbsp;/&nbsp; github.io</p>
+    <h1><span class="name">Technology experiments.</span></h1>
+    <div class="header-rule"></div>
+  </header>
 
-<main>
+  <!-- Positioning statement -->
+  <section class="positioning">
+    <p class="positioning-kicker">Technology Experiments &amp; Decision Systems</p>
+    <p class="positioning-headline">I build small experimental systems to explore how emerging technologies — particularly AI, automation and data pipelines — change how organisations make decisions and operate.</p>
+    <p class="positioning-body">These projects are not products. They are thinking tools — built to test ideas, understand the practical behaviour of modern platforms, and explore what becomes possible when AI is treated as infrastructure rather than a feature.</p>
+    <div class="positioning-rule"></div>
+  </section>
 
-  <a class="card card-radar" href="https://damienhthompson.github.io/Radar/" target="_blank">
-    <span class="card-tag">Tool</span>
-    <div class="card-icon">📡</div>
-    <div class="card-title">Radar</div>
-    <p class="card-desc">A tracking and monitoring tool. Built to keep tabs on what matters.</p>
-    <div class="pills">
-      <span class="pill">HTML</span>
-      <span class="pill">JavaScript</span>
+  <!-- Projects -->
+  <div class="section-label-row">
+    <span class="section-label">Experiments</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="cards">
+
+    <a class="card card-radar" href="https://damienhthompson.github.io/Radar/" target="_blank">
+      <div class="card-top">
+        <span class="card-tag">Decision System</span>
+        <span class="card-icon">📡</span>
+      </div>
+      <div class="card-title">Radar — Executive Opportunity Evaluation Engine</div>
+      <p class="card-summary">A decision system that analyses job opportunities across two dimensions: role fit and career trajectory. Uses AI extraction pipelines and deterministic scoring models to generate a full application strategy.</p>
+      <div class="card-explores">
+        <p class="explores-label">Explores</p>
+        <ul class="explores-list">
+          <li>AI document extraction &amp; structured role analysis</li>
+          <li>Deterministic scoring with hard-rule overrides</li>
+          <li>Career trajectory modelling &amp; sector-aware classification</li>
+          <li>Agentic pipelines with quality gates and auto-rewrite</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <div class="pills">
+          <span class="pill">Python</span>
+          <span class="pill">FastAPI</span>
+          <span class="pill">Claude API</span>
+          <span class="pill">React</span>
+        </div>
+        <span class="card-cta">Open <span class="card-arrow">↗</span></span>
+      </div>
+    </a>
+
+    <a class="card card-mallows" href="https://damienhthompson.github.io/The-Mallows/" target="_blank">
+      <div class="card-top">
+        <span class="card-tag">Game</span>
+        <span class="card-icon">🦔</span>
+      </div>
+      <div class="card-title">The Mallows — Explorable World Engine</div>
+      <p class="card-summary">A Squishmallow-themed world built with my daughter — meet villagers, go on quests, find the circus. An experiment in Canvas 2D game logic and narrative state management. ✨</p>
+      <div class="card-explores">
+        <p class="explores-label">Explores</p>
+        <ul class="explores-list">
+          <li>Canvas 2D game loop and sprite animation</li>
+          <li>Dialogue trees and quest state management</li>
+          <li>Procedural world layout and collision detection</li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <div class="pills">
+          <span class="pill">Canvas 2D</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">HTML</span>
+        </div>
+        <span class="card-cta">Play <span class="card-arrow">↗</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Areas of active interest -->
+  <div class="section-label-row" style="animation-delay:0.35s">
+    <span class="section-label">Areas of active interest</span>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="exploring">
+    <div class="exploring-grid">
+
+      <div class="exploring-item">
+        <p class="exploring-num">01</p>
+        <p class="exploring-title">Agentic workflows</p>
+        <p class="exploring-desc">Chaining AI systems into autonomous pipelines — where the model makes decisions, not just generates text.</p>
+      </div>
+
+      <div class="exploring-item">
+        <p class="exploring-num">02</p>
+        <p class="exploring-title">Decision augmentation</p>
+        <p class="exploring-desc">Using structured models and AI together to improve executive judgement — replacing intuition with reproducible frameworks.</p>
+      </div>
+
+      <div class="exploring-item">
+        <p class="exploring-num">03</p>
+        <p class="exploring-title">Automation economics</p>
+        <p class="exploring-desc">Where AI replaces versus augments human work — and the organisational design implications of getting that boundary wrong.</p>
+      </div>
+
+      <div class="exploring-item">
+        <p class="exploring-num">04</p>
+        <p class="exploring-title">AI-native software patterns</p>
+        <p class="exploring-desc">Systems designed around probabilistic intelligence rather than deterministic logic — and what good architecture looks like when the model is the engine.</p>
+      </div>
+
     </div>
-    <div class="card-footer">
-      <span class="card-cta">Open project</span>
-      <span class="card-arrow">↗</span>
-    </div>
-  </a>
+  </div>
 
-  <a class="card card-mallows" href="https://damienhthompson.github.io/The-Mallows/" target="_blank">
-    <span class="card-tag">Game</span>
-    <div class="card-icon">🦔</div>
-    <div class="card-title">The Mallows</div>
-    <p class="card-desc">A Squishmallow-themed world to explore — meet villagers, go on quests, find the circus. Built with my daughter. ✨</p>
-    <div class="pills">
-      <span class="pill">Canvas 2D</span>
-      <span class="pill">HTML</span>
-      <span class="pill">JavaScript</span>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="https://github.com/damienhthompson" target="_blank">GitHub</a>
+      <span class="footer-dot">·</span>
+      <a href="https://github.com/damienhthompson?tab=repositories" target="_blank">All repos</a>
     </div>
-    <div class="card-footer">
-      <span class="card-cta">Play now</span>
-      <span class="card-arrow">↗</span>
-    </div>
-  </a>
+    <p class="footer-note">Personal technology experiments — built while exploring CIO and technology leadership opportunities.</p>
+  </footer>
 
-</main>
-
-<footer>
-  <a href="https://github.com/damienhthompson" target="_blank">GitHub</a>
-  <span class="footer-dot">·</span>
-  <a href="https://github.com/damienhthompson?tab=repositories" target="_blank">All repos</a>
-</footer>
+</div><!-- /wrap -->
 
 </body>
 </html>
-<<<<<<< HEAD
-=======
-  
->>>>>>> 277dc5d732c5ac6a2b1f7f4e1478bc068f9d4b56
