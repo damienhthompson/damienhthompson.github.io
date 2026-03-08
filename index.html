@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>damienhthompson — things I've built</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0f;
+    --surface: #141417;
+    --border: #222228;
+    --text: #e8e8ee;
+    --muted: #666674;
+    --accent1: #ff6b6b;
+    --accent2: #ffd93d;
+    --accent3: #6bcbff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.4;
+  }
+
+  /* Header */
+  header {
+    padding: 72px 48px 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .name {
+    display: block;
+    background: linear-gradient(135deg, var(--text) 0%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h1 .sub {
+    display: block;
+    color: var(--muted);
+    font-size: 0.42em;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-top: 12px;
+  }
+
+  .header-line {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin-top: 48px;
+    animation: expandWidth 0.8s 0.3s ease both;
+    transform-origin: left;
+  }
+
+  /* Grid */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 48px 120px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 44px 40px 40px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.2s; }
+  .card:nth-child(2) { animation-delay: 0.35s; }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .card-radar::before { background: radial-gradient(ellipse at 0% 0%, rgba(107,203,255,0.08) 0%, transparent 65%); }
+  .card-mallows::before { background: radial-gradient(ellipse at 100% 0%, rgba(255,107,107,0.08) 0%, transparent 65%); }
+
+  .card:hover { border-color: #333340; transform: translateY(-3px); }
+  .card:hover::before { opacity: 1; }
+
+  .card-tag {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 4px;
+    width: fit-content;
+    font-weight: 700;
+  }
+
+  .card-radar .card-tag { background: rgba(107,203,255,0.12); color: var(--accent3); }
+  .card-mallows .card-tag { background: rgba(255,107,107,0.12); color: var(--accent1); }
+
+  .card-icon {
+    font-size: 3rem;
+    line-height: 1;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+    transition: transform 0.3s;
+  }
+
+  .card:hover .card-icon { transform: scale(1.1) rotate(-4deg); }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .card-desc {
+    font-size: 0.92rem;
+    color: #aaaabc;
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-cta {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .card:hover .card-cta { color: var(--text); }
+
+  .card-arrow {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .card:hover .card-arrow {
+    border-color: var(--text);
+    color: var(--text);
+    transform: translate(2px, -2px);
+  }
+
+  /* Pill tags */
+  .pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-size: 0.68rem;
+    padding: 3px 9px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 28px 48px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  footer a {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--text); }
+
+  .footer-dot { color: var(--border); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes expandWidth {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 48px 24px 0; }
+    main { padding: 40px 24px 80px; grid-template-columns: 1fr; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">damienhthompson &nbsp;/&nbsp; github.io</p>
+  <h1>
+    <span class="name">Things I've built.</span>
+    <span class="sub">A collection of projects, tools & experiments.</span>
+  </h1>
+  <div class="header-line"></div>
+</header>
+
+<main>
+
+  <a class="card card-radar" href="https://damienhthompson.github.io/Radar/" target="_blank">
+    <span class="card-tag">Tool</span>
+    <div class="card-icon">📡</div>
+    <div class="card-title">Radar</div>
+    <p class="card-desc">A tracking and monitoring tool. Built to keep tabs on what matters.</p>
+    <div class="pills">
+      <span class="pill">HTML</span>
+      <span class="pill">JavaScript</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">Open project</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </a>
+
+  <a class="card card-mallows" href="https://damienhthompson.github.io/The-Mallows/" target="_blank">
+    <span class="card-tag">Game</span>
+    <div class="card-icon">🦔</div>
+    <div class="card-title">The Mallows</div>
+    <p class="card-desc">A Squishmallow-themed world to explore — meet villagers, go on quests, find the circus. Built with my daughter. ✨</p>
+    <div class="pills">
+      <span class="pill">Canvas 2D</span>
+      <span class="pill">HTML</span>
+      <span class="pill">JavaScript</span>
+    </div>
+    <div class="card-footer">
+      <span class="card-cta">Play now</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </a>
+
+</main>
+
+<footer>
+  <a href="https://github.com/damienhthompson" target="_blank">GitHub</a>
+  <span class="footer-dot">·</span>
+  <a href="https://github.com/damienhthompson?tab=repositories" target="_blank">All repos</a>
+</footer>
+
+</body>
+</html>
